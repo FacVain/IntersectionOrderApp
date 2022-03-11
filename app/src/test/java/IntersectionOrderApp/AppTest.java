@@ -45,4 +45,9 @@ class AppTest {
         ArrayList<Integer> list2 = new ArrayList<>(Arrays.asList(5, 10, 7, 8, 46, 23));
         assertEquals(23, App.findTheKthSmallestInIntersection(list1, list2, 3));
     }
+    @Test
+    public void Fail()
+    {
+        assertEquals(23, 5);
+    }
 }
