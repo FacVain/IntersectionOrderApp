@@ -3,4 +3,4 @@ and continuous deployment to a cloud service by implementing a simple web applic
 
 The app will take two lists of integers, calculate the intersection set between them and find the kth smallest element in this intersection using the quickselect algorithm.
 
-[![FacVain](https://circleci.com/gh/FacVain/IntersectionOrderApp.svg?style=svg)](https://app.circleci.com/pipelines/github/FacVain/IntersectionOrderApp?branch=main)
+[![CircleCI](https://circleci.com/gh/FacVain/IntersectionOrderApp/tree/main.svg?style=svg)](https://circleci.com/gh/FacVain/IntersectionOrderApp/tree/main)

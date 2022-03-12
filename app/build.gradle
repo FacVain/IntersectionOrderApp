@@ -9,6 +9,10 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+
+    // https://imperceptiblethoughts.com/shadow/getting-started/#default-java-groovy-tasks
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'java'
 }
 
 repositories {
