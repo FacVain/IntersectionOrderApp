@@ -7,23 +7,26 @@ import spark.ModelAndView;
 import spark.template.mustache.MustacheTemplateEngine;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class App 
 {
-    public static int findTheKthSmallestInIntersection(ArrayList<Integer> list1, ArrayList<Integer> list2, int k)
+    public static int findTheKthSmallestInIntersection(ArrayList<Integer> list1, ArrayList<Integer> list2, int k) throws EmptyListError, KIntervalError
     {
         if(list1.size() == 0 || list2.size() == 0)
-            return -1;
+            throw new EmptyListError();    
 
         ArrayList<Integer> list = new ArrayList<>();
-        for (Integer i : list1)
-        {
-            if(list2.contains(i))
-                list.add(i);
+        for (Integer i : list1){
+            if(!list.contains(i)){
+                if(list2.contains(i))
+                    list.add(i);
+            }
         }
+
+        if(k < 1 || k > list.size())
+            throw new KIntervalError();
         
         return kthSmallest(list, 0, list.size() - 1, k);
     }
@@ -62,6 +65,7 @@ public class App
  
         return pivotindex;
     }
+
     public static void main(String[] args) {
         port(getHerokuAssignedPort());
 
@@ -84,8 +88,8 @@ public class App
                 java.util.ArrayList<Integer> inputList1 = new java.util.ArrayList<>();
                 while (sc1.hasNext())
                 {
-                int value = Integer.parseInt(sc1.next().replaceAll("\\s",""));
-                inputList1.add(value);
+                    int value = Integer.parseInt(sc1.next().replaceAll("\\s",""));
+                    inputList1.add(value);
                 }
                 sc1.close();
     
@@ -95,11 +99,10 @@ public class App
                 java.util.ArrayList<Integer> inputList2 = new java.util.ArrayList<>();
                 while (sc2.hasNext())
                 {
-                int value = Integer.parseInt(sc2.next().replaceAll("\\s",""));
-                inputList2.add(value);
+                    int value = Integer.parseInt(sc2.next().replaceAll("\\s",""));
+                    inputList2.add(value);
                 }
                 sc2.close();
-    
     
                 String kstr = req.queryParams("k").replaceAll("\\s","");
                 int k = Integer.parseInt(kstr);
@@ -112,6 +115,11 @@ public class App
             {
                 map.put("result", "not computed yet!");
                 map.put("error", "<b>Error:</b> Please enter integer values.");
+            }
+            catch(EmptyListError | KIntervalError e)
+            {
+                map.put("result", "not computed yet!");
+                map.put("error", e.getMessage());
             }
             catch(Exception e)
             {

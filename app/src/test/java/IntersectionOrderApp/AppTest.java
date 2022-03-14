@@ -15,34 +15,73 @@ class AppTest {
     {
         ArrayList<Integer> list1 = new ArrayList<>();
         ArrayList<Integer> list2 = new ArrayList<>(Arrays.asList(10, 5, 6, 1, 23, 11));
-        assertEquals(-1, App.findTheKthSmallestInIntersection(list1, list2, 1));
+        assertThrows(EmptyListError.class, () -> { App.findTheKthSmallestInIntersection(list1, list2, 1);});
     }
     @Test 
     public void list2Empty() 
     {
         ArrayList<Integer> list2 = new ArrayList<>();
         ArrayList<Integer> list1 = new ArrayList<>(Arrays.asList(10, 5, 6, 1, 23, 11));
-        assertEquals(-1, App.findTheKthSmallestInIntersection(list1, list2, 1));
+        assertThrows(EmptyListError.class, () -> { App.findTheKthSmallestInIntersection(list1, list2, 1);});
+    }
+    @Test 
+    public void givenKisBiggerThanIntervalSize() 
+    {
+        ArrayList<Integer> list1 = new ArrayList<>(Arrays.asList(10, 5, 6, 1, 23, 11));
+        ArrayList<Integer> list2 = new ArrayList<>(Arrays.asList(5, 10, 7, 8, 46, 23));
+        assertThrows(KIntervalError.class, () -> { App.findTheKthSmallestInIntersection(list1, list2, 4);});
+    }
+    @Test 
+    public void givenKisSmallerThanOne() 
+    {
+        ArrayList<Integer> list1 = new ArrayList<>(Arrays.asList(10, 5, 6, 1, 23, 11));
+        ArrayList<Integer> list2 = new ArrayList<>(Arrays.asList(5, 10, 7, 8, 46, 23));
+        assertThrows(KIntervalError.class, () -> { App.findTheKthSmallestInIntersection(list1, list2, -1);});
     }
     @Test
     public void FirstSmallest()
     {
-        ArrayList<Integer> list1 = new ArrayList<>(Arrays.asList(10, 5, 6, 1, 23, 11));
-        ArrayList<Integer> list2 = new ArrayList<>(Arrays.asList(5, 10, 7, 8, 46, 23));
-        assertEquals(5, App.findTheKthSmallestInIntersection(list1, list2, 1));
+        try{
+            ArrayList<Integer> list1 = new ArrayList<>(Arrays.asList(10, 5, 6, 1, 23, 11));
+            ArrayList<Integer> list2 = new ArrayList<>(Arrays.asList(5, 10, 7, 8, 46, 23));
+            assertEquals(5, App.findTheKthSmallestInIntersection(list1, list2, 1));
+        }catch(Exception e){};
     }
     @Test
     public void SecondSmallest()
     {
-        ArrayList<Integer> list1 = new ArrayList<>(Arrays.asList(10, 5, 6, 1, 23, 11));
-        ArrayList<Integer> list2 = new ArrayList<>(Arrays.asList(5, 10, 7, 8, 46, 23));
-        assertEquals(10, App.findTheKthSmallestInIntersection(list1, list2, 2));
+        try{
+            ArrayList<Integer> list1 = new ArrayList<>(Arrays.asList(10, 5, 6, 1, 23, 11));
+            ArrayList<Integer> list2 = new ArrayList<>(Arrays.asList(5, 10, 7, 8, 46, 23));
+            assertEquals(10, App.findTheKthSmallestInIntersection(list1, list2, 2));
+        }catch(Exception e){};
+        
     }
     @Test
     public void ThirdSmallest()
     {
-        ArrayList<Integer> list1 = new ArrayList<>(Arrays.asList(10, 5, 6, 1, 23, 11));
-        ArrayList<Integer> list2 = new ArrayList<>(Arrays.asList(5, 10, 7, 8, 46, 23));
-        assertEquals(23, App.findTheKthSmallestInIntersection(list1, list2, 3));
+        try{
+            ArrayList<Integer> list1 = new ArrayList<>(Arrays.asList(10, 5, 6, 1, 23, 11));
+            ArrayList<Integer> list2 = new ArrayList<>(Arrays.asList(5, 10, 7, 8, 46, 23));
+            assertEquals(23, App.findTheKthSmallestInIntersection(list1, list2, 3));
+        }catch(Exception e){};
+    }
+    @Test
+    public void List_With_Negative_Values_First_Smallest()
+    {
+        try{
+            ArrayList<Integer> list1 = new ArrayList<>(Arrays.asList(-5, -6, 3, 3, 1, 2));
+            ArrayList<Integer> list2 = new ArrayList<>(Arrays.asList(-5, 3, 1, 8, 46, 23));
+            assertEquals(-5, App.findTheKthSmallestInIntersection(list1, list2, 1));
+        }catch(Exception e){};
+    }
+    @Test
+    public void List_With_Negative_Values_Second_Smallest()
+    {
+        try{
+            ArrayList<Integer> list1 = new ArrayList<>(Arrays.asList(-5, -6, 3, 3, 1, 2));
+            ArrayList<Integer> list2 = new ArrayList<>(Arrays.asList(-5, 3, 1, 8, 46, 23));
+            assertEquals(1, App.findTheKthSmallestInIntersection(list1, list2, 2));
+        }catch(Exception e){};
     }
 }
