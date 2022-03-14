@@ -69,41 +69,55 @@ public class App
             (rq, rs) -> {
               Map<String, String> map = new HashMap<String, String>();
               map.put("result", "not computed yet!");
+              map.put("error", "");
               return new ModelAndView(map, "findTheKth.mustache");
             },
             new MustacheTemplateEngine());
 
         post("/", (req, res) -> {
-          String list1 = req.queryParams("list1");
-          java.util.Scanner sc1 = new java.util.Scanner(list1);
-          sc1.useDelimiter("[;\r\n]+");
-          java.util.ArrayList<Integer> inputList1 = new java.util.ArrayList<>();
-          while (sc1.hasNext())
-          {
-            int value = Integer.parseInt(sc1.next().replaceAll("\\s",""));
-            inputList1.add(value);
-          }
-          sc1.close();
-
-          String list2 = req.queryParams("list2");
-          java.util.Scanner sc2 = new java.util.Scanner(list2);
-          sc2.useDelimiter("[;\r\n]+");
-          java.util.ArrayList<Integer> inputList2 = new java.util.ArrayList<>();
-          while (sc2.hasNext())
-          {
-            int value = Integer.parseInt(sc2.next().replaceAll("\\s",""));
-            inputList2.add(value);
-          }
-          sc2.close();
-
-
-          String kstr = req.queryParams("k").replaceAll("\\s","");
-          int k = Integer.parseInt(kstr);
-
-          int result = App.findTheKthSmallestInIntersection(inputList1, inputList2, k);
-
-          Map<String, Integer> map = new HashMap<String, Integer>();
-          map.put("result", result);
+            Map<String, String> map = new HashMap<String, String>();
+            try
+            {  
+                String list1 = req.queryParams("list1");
+                java.util.Scanner sc1 = new java.util.Scanner(list1);
+                sc1.useDelimiter("[;\r\n]+");
+                java.util.ArrayList<Integer> inputList1 = new java.util.ArrayList<>();
+                while (sc1.hasNext())
+                {
+                int value = Integer.parseInt(sc1.next().replaceAll("\\s",""));
+                inputList1.add(value);
+                }
+                sc1.close();
+    
+                String list2 = req.queryParams("list2");
+                java.util.Scanner sc2 = new java.util.Scanner(list2);
+                sc2.useDelimiter("[;\r\n]+");
+                java.util.ArrayList<Integer> inputList2 = new java.util.ArrayList<>();
+                while (sc2.hasNext())
+                {
+                int value = Integer.parseInt(sc2.next().replaceAll("\\s",""));
+                inputList2.add(value);
+                }
+                sc2.close();
+    
+    
+                String kstr = req.queryParams("k").replaceAll("\\s","");
+                int k = Integer.parseInt(kstr);
+    
+                int result = App.findTheKthSmallestInIntersection(inputList1, inputList2, k);
+                map.put("result", "" + result);
+                map.put("error", "");
+            }
+            catch(NumberFormatException e)
+            {
+                map.put("result", "not computed yet!");
+                map.put("error", "<b>Error:</b> Please enter integer values.");
+            }
+            catch(Exception e)
+            {
+                map.put("result", "not computed yet!");
+                map.put("error", "<b>Error:</b> An error occured please enter inputs as stated.");
+            }
           return new ModelAndView(map, "findTheKth.mustache");
         }, new MustacheTemplateEngine());
     }
